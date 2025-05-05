@@ -1,0 +1,115 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+void swap(int *b,int *c)
+{
+   int temp = *b;
+   *b = *c;
+   *c = temp;
+}
+
+int partition(int arr[], int low, int high)
+{
+    int p = arr[low];
+    int i = low;
+    int j = high + 1;
+    while (1)
+    {
+        do
+        {
+            i++;
+        } while (i <= high && arr[i] <= p);
+        do
+        {
+            j--;
+        } while (arr[j] > p);
+        if (i >= j)
+        {
+            break;
+        }
+        swap(&arr[i], &arr[j]);
+        /*printf("Array after swapping: ");
+        int k;
+        for (k = 0; k <= high; k++)
+        {
+           printf("%d ", arr[k]);
+        }
+        printf("\n");*/
+    }
+    swap(&arr[low], &arr[j]);
+    printf("Array after swapping with pivot: ");
+    int k;
+    for (k = 0; k <= high; k++)
+    {
+       printf("%d  ", arr[k]);
+    }
+    printf("\n");
+    return j;
+}
+
+void quicksort(int arr[], int low, int high)
+{
+    if (low < high)
+    {
+        int k;
+        int s = partition(arr, low, high);
+
+        quicksort(arr, low, s - 1);
+        quicksort(arr, s + 1, high);
+        /*printf("Array after sorting range (%d, %d): ", low, high);
+        for (k = 0; k <= high; k++)
+        {
+           printf("%d ", arr[k]);
+        }
+        printf("\n");*/
+    }
+}
+
+int main()
+{
+    int n, i;
+    printf("Enter the no. of elements in array: ");
+    scanf("%d", &n);
+    int *arr = (int *)malloc(n * sizeof(int));
+    printf("Enter elements: ");
+    for (i = 0; i < n; i++)
+    {
+        scanf("%d", &arr[i]);
+    }
+    printf("Original Array: ");
+    for (i = 0; i < n; i++)
+    {
+        printf("%d  ", arr[i]);
+    }
+    printf("\n");
+
+    quicksort(arr, 0, n - 1);
+
+    printf("Sorted Array: ");
+    for (i = 0; i < n; i++)
+    {
+        printf("%d  ", arr[i]);
+    }
+    printf("\n");
+
+    free(arr);
+    return 0;
+}
+$cc quicksort.c
+./a.out
+Enter the no. of elements in array: 8
+Enter elements: 7
+9
+1
+23
+15
+10
+5
+30
+Original Array: 7  9  1  23  15  10  5  30
+Array after swapping with pivot: 1  5  7  23  15  10  9  30
+Array after swapping with pivot: 1  5
+Array after swapping with pivot: 1  5  7  9  15  10  23  30
+Array after swapping with pivot: 1  5  7  9  15  10
+Array after swapping with pivot: 1  5  7  9  10  15
+Sorted Array: 1  5  7  9  10  15  23  30
