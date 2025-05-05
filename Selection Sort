@@ -1,0 +1,57 @@
+#include<stdio.h>
+#include<stdlib.h>
+void swap(int *x, int *y)
+{
+        int temp = *x;
+        *x = *y;
+        *y = temp;
+}
+void print(int *A, int n)
+{
+        int i;
+        for(i=0;i<n;i++)
+        {
+                printf("%d\t",A[i]);
+
+        }
+        printf("\n");
+}
+void selectionsort(int *A,int n)
+{
+        int i,j,min;
+        for(i=0;i<=n-2;i++)
+        {
+                min=i;
+                printf("Pass%d:   ",i+1);
+                for(j=i+1;j<=n-1;j++)
+                {
+                        if(A[min]>A[j])
+                        {
+                                min=j;
+                        }
+                }
+                swap(&A[min],&A[i]);
+                print(A,n);
+
+        }
+}
+
+
+int main()
+{
+        int n,i;
+        printf("Enter total number of elements: ");
+        scanf("%d",&n);
+        int *A=(int *)malloc(n*sizeof(int));
+        printf("Enter Elements{non negative integer}: ");
+        for(i=0;i<n;i++)
+        {
+                scanf("%d",&A[i]);
+        }
+        printf("Sorting steps:\n");
+        selectionsort(A,n);
+        printf("\n");
+        printf("final sorted array: ");
+        print(A,n);
+        return 0;
+}
