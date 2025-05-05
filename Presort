@@ -1,0 +1,111 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+
+void swap(int *a, int *b) {
+    int temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+
+int partition(int s[], int low, int high) {
+    int p = s[low];
+    int i = low;
+    int j = high + 1;
+
+    while (1) {
+        do {
+            i++;
+        } while (i <= high && s[i] < p);
+
+        do {
+            j--;
+        } while (s[j] > p);
+
+        if (i >= j) {
+            break;
+        }
+
+        swap(&s[i], &s[j]);
+    }
+
+    swap(&s[low], &s[j]);
+    return j;
+}
+
+
+void quicksort(int s[], int low, int high) {
+    if (low < high) {
+        int pi = partition(s, low, high);
+        quicksort(s, low, pi);
+        quicksort(s, pi + 1, high);
+    }
+}
+
+
+int binarySearch(int s[], int n, int key) {
+    int low = 0;
+    int high = n - 1;
+
+    while (low <= high) {
+        int mid = low + (high - low) / 2;
+
+        if (s[mid] == key)
+            return mid;
+        if (s[mid] < key)
+            low = mid + 1;
+        else
+            high = mid - 1;
+    }
+
+    return -1;
+}
+
+
+void printArray(int s[], int size) {
+    int i;
+    for ( i = 0; i < size; i++) {
+        printf("%d ", s[i]);
+    }
+    printf("\n");
+}
+
+
+int main() {
+    int n, key;
+
+    printf("No of elements: ");
+    scanf("%d", &n);
+
+
+    int *s = (int *)malloc(n * sizeof(int));
+
+    printf("Enter elements: ");
+    int i;
+    for ( i = 0; i < n; i++) {
+        scanf("%d", &s[i]);
+    }
+
+
+    quicksort(s, 0, n - 1);
+
+    printf("Sorted Array: ");
+    printArray(s, n);
+
+
+    printf("Enter the element to search: ");
+    scanf("%d", &key);
+
+
+    int result = binarySearch(s, n, key);
+    if (result != -1) {
+        printf("Element %d found at index %d\n", key, result);
+    } else {
+        printf("Element %d not found in the array\n", key);
+    }
+
+    free(s);
+
+    return 0;
+}
