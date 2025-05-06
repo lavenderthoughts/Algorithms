@@ -1,0 +1,46 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+void swap(char **str1, char **str2) {
+    char *temp = *str1;
+    *str1 = *str2;
+    *str2 = temp;
+}
+void bubble(char *words[],int count)
+{
+	int i,j;
+	for(i=0;i<=count-1;i++)
+	{
+		for(j=0;j<count-1-i;j++)
+		{
+			if(strcmp(words[j],words[j+1]) > 0)
+			{
+				swap(&words[j],&words[j+1]);
+			}			
+		}
+	}
+}
+
+int main()
+{
+	char *str=(char *)malloc(100*sizeof(char ));
+	printf("Enter string: ");
+	scanf("%[^\n]",str);
+	
+	char *words[50];
+	int count=0;
+	char *token=strtok(str," ");
+	while(token != NULL)
+	{
+		words[count++]=token;
+		token=strtok(NULL," ");
+	}
+	int i;
+	bubble(words,count);
+	printf("sorted array: ");
+	for(i=0;i<=count-1;i++)
+	{
+		printf("%s ",words[i]);
+	}
+}
